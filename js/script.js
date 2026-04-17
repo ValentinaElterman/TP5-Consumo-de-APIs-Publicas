@@ -15,8 +15,12 @@ boton.addEventListener('click', async function () {
     }
 
     // cargando
-    div.innerHTML = '<p class="empty">Buscando a ' + nombreBusqueda + '...</p>';
-
+    div.innerHTML = `
+        <div>
+            <div class="loader"></div>
+            <p class="empty">Buscando...</p>
+        </div>
+    `;
     try {
         const respuesta = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombreBusqueda}`);
         

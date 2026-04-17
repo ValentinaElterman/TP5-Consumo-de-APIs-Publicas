@@ -4,33 +4,33 @@
       const out = document.getElementById('out-get');
       show(out, 'Cargando...')
       try{
-        const res = await fetch('https://pokeapi.co/api/v2/pokemon/name');
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
         if(!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        const user = data.results[0];
-        // Mostrar foto y nombre (contenido enriquecido)
         out.innerHTML = '';
-        const img = document.createElement('img'); img.src = user.picture.large; img.alt = 'avatar'; img.style.width='120px'; img.style.borderRadius='10px'; img.style.display='block'; img.style.margin='0 auto 8px';
+        const img = document.createElement('img'); img.src = pokemon.sprites.front_default; img.alt = 'avatar'; img.style.width='120px'; img.style.borderRadius='10px'; img.style.display='block'; img.style.margin='0 auto 8px';
         out.appendChild(img);
-        const name = document.createElement('div'); name.textContent = user.name.title + ' ' + user.name.first + ' ' + user.name.last; name.style.fontWeight='700'; name.style.textAlign='center'; out.appendChild(name);
+        const name = document.createElement('div'); name.textContent = data.name.toUpperCase(); name.style.fontWeight='700'; name.style.textAlign='center'; out.appendChild(name);
       }catch(e){ show(out, 'Error: ' + e.message) }
     })
     document.getElementById('clear-get').addEventListener('click', function(){ clear(document.getElementById('out-get')) })
 
     // POST
     document.getElementById('run-post').addEventListener('click', async function(){
-      const out = document.getElementById('out-post'); show(out,'Enviando...')
+      const out = document.getElementById('out-post'); 
+      //show(out,'Enviando...')
       try{
         const res = await fetch('https://jsonplaceholder.typicode.com/posts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:'Hola',body:'Contenido',userId:1})});
         if(!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json(); show(out,json)
-      }catch(e){ show(out,'Error: ' + e.message) }
+      }
+      catch(e){ show(out,'Error: ' + e.message) }
     })
     document.getElementById('clear-post').addEventListener('click', function(){ clear(document.getElementById('out-post')) })
 
     // Error example
     document.getElementById('run-err').addEventListener('click', async function(){
-      const out = document.getElementById('out-err'); show(out,'Probando...')
+      const out = document.getElementById('out-err'); 
       try{
         const res = await fetch('https://httpstat.us/500');
         if(!res.ok) throw new Error('HTTP ' + res.status);
